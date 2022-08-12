@@ -7,12 +7,12 @@ GRANT ALL PRIVILEGES ON whatabook.* TO'whatabook_user'@'localhost';
 
 ALTER TABLE wishlist DROP FOREIGN KEY fk_book;
 ALTER TABLE wishlist DROP FOREIGN KEY fk_user;
-ALTER TABLE availability DROP FOREIGN KEY availability_book_fk;
-ALTER TABLE availability DROP FOREIGN KEY availability_store_fk;
+ALTER TABLE book_availability DROP FOREIGN KEY availability_book_fk;
+ALTER TABLE book_availability DROP FOREIGN KEY availability_store_fk;
 
 DROP TABLE IF EXISTS store;
 DROP TABLE IF EXISTS book;
-DROP TABLE IF EXISTS availability;
+DROP TABLE IF EXISTS book_availability;
 DROP TABLE IF EXISTS wishlist;
 DROP TABLE IF EXISTS user;
 
@@ -30,8 +30,17 @@ CREATE TABLE book (
     PRIMARY KEY(book_id)
 );
 
-CREATE TABLE availability(
-    availability_id INT     NOT NULL AUTO_INCREMENT
+-- CREATE TABLE book_availability (
+--     availability_id     INT             NOT NULL    AUTO_INCREMENT,
+--     book_id             INT             NOT NULL,
+--     store_id            INT             NOT NULL,
+--     PRIMARY KEY(availability_id),
+--     CONSTRAINT availability_book_fk FOREIGN KEY (book_id) REFERENCES book(book_id),
+--     CONSTRAINT availability_store_fk  FOREIGN KEY (store_id)  REFERENCES store(store_id)
+-- );
+
+CREATE TABLE book_availability (
+    availability_id INT     NOT NULL    AUTO_INCREMENT,
     book_id         INT     NOT NULL,
     store_id        INT     NOT NULL,
     PRIMARY KEY (availability_id),
@@ -43,7 +52,7 @@ CREATE TABLE user (
     user_id         INT         NOT NULL    AUTO_INCREMENT,
     first_name      VARCHAR(75) NOT NULL,
     last_name       VARCHAR(75) NOT NULL,
-    current_store_id INT,       NOT NULL,   DEFAULT 1,
+    current_store_id INT        NOT NULL    DEFAULT 1,
     PRIMARY KEY(user_id) 
 );
 
@@ -72,15 +81,15 @@ INSERT INTO book(book_name, author, details) VALUES('Need', 'Carrie Jones', 'Fai
 INSERT INTO book(book_name, author, details) VALUES('Asylum', 'Madeleine Roux', 'Be careful or you''ll lose your mind');
 INSERT INTO book(book_name, author, details) VALUES('Dorothy Must Die', 'Danielle Paige', 'You''ve never seen OZ like this before');
 
-INSERT INTO availability(book_id, store_id) VALUES(1,1);
-INSERT INTO availability(book_id, store_id) VALUES(2,1);
-INSERT INTO availability(book_id, store_id) VALUES(3,1);
-INSERT INTO availability(book_id, store_id) VALUES(4,1);
-INSERT INTO availability(book_id, store_id) VALUES(5,1);
-INSERT INTO availability(book_id, store_id) VALUES(6,1);
-INSERT INTO availability(book_id, store_id) VALUES(7,1);
-INSERT INTO availability(book_id, store_id) VALUES(8,1);
-INSERT INTO availability(book_id, store_id) VALUES(9,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(1,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(2,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(3,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(4,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(5,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(6,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(7,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(8,1);
+INSERT INTO book_availability(book_id, store_id) VALUES(9,1);
 
 -- Users
 INSERT INTO user(first_name, last_name)  VALUES('Rebekkah', 'Stringer');
